@@ -9,8 +9,6 @@
         @keyup="totalcharacter++"
         @search-change="charCount"
         :options="options">
-        <!-- <template v-if="this.selected.length <= 100">Введите минимум три символа, либо попробуйте изменить запрос</template> -->
-        
         </multiselect>
         <p style="color:white; margin-top: 100px;">Charakt {{ totalcharacter }} times.</p>
     </div>
