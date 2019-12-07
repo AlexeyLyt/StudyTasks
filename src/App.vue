@@ -9,6 +9,8 @@
 </template>
 
 <style lang="scss">
+@import "./styles/styles.css";
+
 #app {
   width: 100vw;
   height: 100vh;
