@@ -34,6 +34,11 @@ const routes = [
     path: '/Task4',
     name: 'Task4',
     component: Task4
+  },
+  {
+  path: '/weather',
+  name: 'weather',
+  component: Home
   }
 ]
 

@@ -17,7 +17,7 @@
   font-family: tahoma;
   color:#282828;
   margin: 0px;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 }
 
 body {
