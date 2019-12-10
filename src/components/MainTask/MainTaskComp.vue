@@ -34,7 +34,7 @@
                 <div class="example-slide">
                     <div v-for="weatherHour in weatherDay" :key="weatherHour.id" class="slide-item">
                         <div class="weather-time">{{ moment.unix(weatherHour.dt).utc().format('LT') }}</div>
-
+                        <!-- <div class="weather-timezone-region"> {{ moment.unix(weatherHour.dt).utc().format('LT') }} </div> -->
                         <div v-if="weatherHour.weather[0].main === 'Atmosphere'" class="icon sun-shower">
                             <div class="cloud"></div>
                             <div class="sun">
@@ -82,76 +82,6 @@
                 </div>
       </b-carousel-slide>
     </b-carousel>
-
-    <!-- <p class="mt-4">
-      Slide #: {{ slide }}<br>
-      Sliding: {{ sliding }}
-    </p> -->
-
-        <!-- <carousel 
-        v-model="slide"
-        :navigationEnabled="true"
-        :navigationNextLabel="nextLabel" 
-        :navigationPrevLabel="prevLabel"
-        :perPage='1'
-        v-on:pageChange="pageChange"
-        ref="carousel"
-        :navigateTo="slide">
-
-            <slide v-for="weatherDay in weatherData" :key="weatherDay.id">
-                <h1 class="day">{{ moment(weatherDay[0].dt_txt).format('dddd') }} <br> {{ moment(weatherDay[0].dt_txt).format('LL') }}</h1>
-                <div class="example-slide">
-                    <div v-for="weatherHour in weatherDay" :key="weatherHour.id" class="slide-item">
-                        <div class="weather-time">{{ moment.unix(weatherHour.dt).utc().format('LT') }}</div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Atmosphere'" class="icon sun-shower">
-                            <div class="cloud"></div>
-                            <div class="sun">
-                                <div class="rays"></div>
-                            </div>
-                            <div class="rain"></div>
-                        </div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Thunderstorm'" class="icon thunder-storm">
-                            <div class="cloud"></div>
-                            <div class="lightning">
-                                <div class="bolt"></div>
-                                <div class="bolt"></div>
-                            </div>
-                        </div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Clouds'" class="icon cloudy">
-                            <div class="cloud"></div>
-                            <div class="cloud"></div>
-                        </div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Snow'" class="icon flurries">
-                            <div class="cloud"></div>
-                            <div class="snow">
-                                <div class="flake"></div>
-                                <div class="flake"></div>
-                            </div>
-                        </div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Clear'" class="icon sunny">
-                            <div class="sun">
-                                <div class="rays"></div>
-                            </div>
-                        </div>
-
-                        <div
-                        v-if="weatherHour.weather[0].main === 'Drizzle' ||
-                        weatherHour.weather[0].main === 'Rain'" class="icon rainy">
-                            <div class="cloud"></div>
-                            <div class="rain"></div>
-                        </div>
-
-                        <div class="weather-temp">{{ Math.round(weatherHour.main.temp) + ' °' + 'C' }}</div>
-                    </div>
-                </div>
-            </slide>
-
-         </carousel> -->
 
     </div>
 </template>
@@ -214,7 +144,7 @@ export default {
         }else{
             this.$axios.get(`${config.geoApi}?apikey=${config.apiKeyGeo}&format=json&geocode=${currentValue}`)
             .then( response => {
-            // console.log(`${config.geoApi}?apikey=${config.apiKeyGeo}&format=json&geocode=${currentValue}`);
+            console.log(`${config.geoApi}?apikey=${config.apiKeyGeo}&format=json&geocode=${currentValue}`);
 
             this.geo = response.data.response.GeoObjectCollection.featureMember;
                 
@@ -224,6 +154,7 @@ export default {
                 this.coord.push(obj.GeoObject.Point.pos); // вытаскиваю координаты
                     
             });
+            console.log(this.options)
                 
             })
         }
@@ -241,7 +172,7 @@ export default {
         axiosWeatherApi() {
             this.$axios.get(`${config.weatherApi}lat=${this.lat}&lon=${this.lon}&units=metric&appid=${config.apiKeyWeather}`)
             .then( response => {
-            // console.log(`${config.weatherApi}lat=${this.lat}&lon=${this.lon}&units=metric&appid=${config.apiKeyWeather}`);
+            console.log(`${config.weatherApi}lat=${this.lat}&lon=${this.lon}&units=metric&appid=${config.apiKeyWeather}`);
 
             this.weather = response.data.list;
 
@@ -309,6 +240,16 @@ export default {
 <style lang="scss">
 // @import "~vue-multiselect/dist/vue-multiselect.min.css";
 
+@mixin screen($media) {
+  @if $media == 1330 {
+    @media (max-width: 1330px) {@content};
+  } 
+}
+
+.weather { 
+    margin-top: 70px;
+}
+
 h1 {
     text-align: center;
     color: white !important;
@@ -323,6 +264,10 @@ h1 {
 
   .carousel {
     color: white;
+}
+
+.carousel-indicators li {
+    outline: none;
 }
 
 .day {
@@ -347,6 +292,9 @@ h1 {
     justify-content: center;
     min-height: 10rem;
     // flex-wrap: wrap;
+    @include screen(1330) {
+        flex-wrap: wrap;
+    }
   }
 
 .example-slide div {
@@ -436,6 +384,10 @@ h1 {
 
 .carousel-indicators {
     top: 345px;
+    @include screen(1330) {
+        top: 530px;
+        margin-bottom: 90px;
+    }
 }
 
 </style>

@@ -1,18 +1,16 @@
 <template>
   <div class="weather">
 
-    <Nav/>
+    <!-- <Nav/> -->
     <MainTaskComp/>
     
   </div>
 </template>
 
 <script>
-import Nav from '@/components/Nav.vue'
 import MainTaskComp from '@/components/MainTask/MainTaskComp.vue'
 export default {
   components: {
-    Nav,
     MainTaskComp
   },
   data () {
