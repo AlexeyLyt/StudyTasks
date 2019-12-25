@@ -1,5 +1,5 @@
 <template>  
-    <div class="weather">
+    <div class="s">
         <h1>ПОГОДА</h1>
         <multiselect
         placeholder="Введите город"
@@ -34,49 +34,9 @@
                 <div class="example-slide">
                     <div v-for="weatherHour in weatherDay" :key="weatherHour.id" class="slide-item">
                         <div class="weather-time">{{ moment.unix(weatherHour.dt).utc().format('LT') }}</div>
-                        <!-- <div class="weather-timezone-region"> {{ moment.unix(weatherHour.dt).utc().format('LT') }} </div> -->
-                        <div v-if="weatherHour.weather[0].main === 'Atmosphere'" class="icon sun-shower">
-                            <div class="cloud"></div>
-                            <div class="sun">
-                                <div class="rays"></div>
-                            </div>
-                            <div class="rain"></div>
-                        </div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Thunderstorm'" class="icon thunder-storm">
-                            <div class="cloud"></div>
-                            <div class="lightning">
-                                <div class="bolt"></div>
-                                <div class="bolt"></div>
-                            </div>
-                        </div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Clouds'" class="icon cloudy">
-                            <div class="cloud"></div>
-                            <div class="cloud"></div>
-                        </div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Snow'" class="icon flurries">
-                            <div class="cloud"></div>
-                            <div class="snow">
-                                <div class="flake"></div>
-                                <div class="flake"></div>
-                            </div>
-                        </div>
-
-                        <div v-if="weatherHour.weather[0].main === 'Clear'" class="icon sunny">
-                            <div class="sun">
-                                <div class="rays"></div>
-                            </div>
-                        </div>
-
-                        <div
-                        v-if="weatherHour.weather[0].main === 'Drizzle' ||
-                        weatherHour.weather[0].main === 'Rain'" class="icon rainy">
-                            <div class="cloud"></div>
-                            <div class="rain"></div>
-                        </div>
-
+                        <!-- {{weatherHour.weather[0].main}} -->
+                        <Icon :iconType="weatherHour.weather[0].main" />
+                        
                         <div class="weather-temp">{{ Math.round(weatherHour.main.temp) + ' °' + 'C' }}</div>
                     </div>
                 </div>
@@ -88,14 +48,13 @@
 
 <script>
 /* eslint-disable no-console */
-// import { Carousel, Slide } from 'vue-carousel'
 import Multiselect from 'vue-multiselect'
 import moment from 'moment'
 import config from '../../../config.js'
-// import Carousel from '@/components/MainTask/Carousel.vue'
+import Icon from './Icon'
 export default {
     name: 'weather',
-    components: { Multiselect },
+    components: { Multiselect, Icon },
     data () {
         return {
             totalcharacter : 0,
@@ -130,11 +89,6 @@ export default {
             console.log(this.slide);
             this.$router.push({ query: { name: this.selected.name, lat: this.lat, lon: this.lon, page: this.slide } }).catch(err => {console.log(err)})
         },
-        // pageChange(i) { 
-        //     this.currentPage = i;
-        //     console.log(this.slide);
-        //     this.$router.push({ query: { name: this.selected.name, lat: this.lat, lon: this.lon, page: this.currentPage } })
-        // },
         getGeoApi(currentValue) {
         this.temp = [];
         this.time = [];
@@ -232,6 +186,8 @@ export default {
             this.axiosWeatherApi(); 
 
         }
+        console.log(this.weatherHour, 666);
+        
     }
 }
 </script>
