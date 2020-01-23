@@ -15,11 +15,14 @@ moment.locale('ru');
 import App from './App.vue'
 import router from './router'
 
+import store from './store'
+
 Vue.config.productionTip = false
 
 export const eventBus = new Vue() // добавление нового канала - ???
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

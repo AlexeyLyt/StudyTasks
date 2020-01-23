@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/MainTask.vue'
+import VuexExample from '@/views/AppVuex.vue'
 import Task1 from '@/views/Task1.vue'
 import Task2 from '@/views/Task2.vue'
 import Task3 from '@/views/Task3.vue'
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'MainTask',
     component: Home
+  },
+  {
+    path: '/vuex',
+    name: 'VuexExample',
+    component: VuexExample
   },
   {
     path: '/Task1',
